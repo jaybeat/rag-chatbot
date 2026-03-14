@@ -125,22 +125,31 @@ function addMessage(content, type, sources = null, isWelcome = false) {
     let html = `<div class="message-content">${displayContent}</div>`;
     
     if (sources && sources.length > 0) {
-        // Format sources as clickable links
-        const sourcesHtml = sources.map(source => {
+        // Deduplicate sources by lesson_link or course_title
+        const seen = new Set();
+        const uniqueSources = sources.filter(source => {
+            const key = source.lesson_link || source.course_title;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+
+        // Format sources as clickable pills/tags
+        const sourcesHtml = uniqueSources.map(source => {
             const displayText = source.lesson_number !== null && source.lesson_number !== undefined
                 ? `${source.course_title} - Lesson ${source.lesson_number}`
                 : source.course_title;
 
             if (source.lesson_link) {
-                return `<a href="${source.lesson_link}" target="_blank" rel="noopener noreferrer" class="source-link">${displayText}</a>`;
+                return `<a href="${source.lesson_link}" target="_blank" rel="noopener noreferrer" class="source-link" title="Open ${displayText}">${displayText}</a>`;
             } else {
-                return `<span class="source-text">${displayText}</span>`;
+                return `<span class="source-text" title="${displayText}">${displayText}</span>`;
             }
-        }).join(', ');
+        }).join('');
 
         html += `
             <details class="sources-collapsible">
-                <summary class="sources-header">Sources</summary>
+                <summary class="sources-header">Sources (${uniqueSources.length})</summary>
                 <div class="sources-content">${sourcesHtml}</div>
             </details>
         `;

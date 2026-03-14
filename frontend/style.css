@@ -241,22 +241,52 @@ header h1 {
 }
 
 .sources-content {
-    padding: 0 0.5rem 0.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
     color: var(--text-secondary);
 }
 
 .source-link {
-    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--surface-hover);
+    color: var(--primary-color);
     text-decoration: none;
-    cursor: pointer;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    width: fit-content;
 }
 
 .source-link:hover {
-    text-decoration: underline;
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.source-link::after {
+    content: '↗';
+    font-size: 0.7rem;
+    opacity: 0.7;
 }
 
 .source-text {
+    display: flex;
+    padding: 0.35rem 0.75rem;
+    background: var(--surface);
     color: var(--text-secondary);
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    width: fit-content;
 }
 
 /* Markdown formatting styles */
