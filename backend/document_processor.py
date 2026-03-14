@@ -191,6 +191,7 @@ class DocumentProcessor:
                                 content=chunk_with_context,
                                 course_title=course.title,
                                 lesson_number=current_lesson,
+                                lesson_link=lesson_link,
                                 chunk_index=chunk_counter
                             )
                             course_chunks.append(course_chunk)
@@ -237,11 +238,12 @@ class DocumentProcessor:
                         content=chunk_with_context,
                         course_title=course.title,
                         lesson_number=current_lesson,
+                        lesson_link=lesson_link,
                         chunk_index=chunk_counter
                     )
                     course_chunks.append(course_chunk)
                     chunk_counter += 1
-        
+
         # If no lessons found, treat entire content as one document
         if not course_chunks and len(lines) > 2:
             remaining_content = '\n'.join(lines[start_index:]).strip()

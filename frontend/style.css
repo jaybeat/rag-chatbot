@@ -245,6 +245,20 @@ header h1 {
     color: var(--text-secondary);
 }
 
+.source-link {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.source-link:hover {
+    text-decoration: underline;
+}
+
+.source-text {
+    color: var(--text-secondary);
+}
+
 /* Markdown formatting styles */
 .message-content h1,
 .message-content h2,
