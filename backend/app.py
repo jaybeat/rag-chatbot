@@ -88,14 +88,19 @@ async def get_course_stats():
 @app.on_event("startup")
 async def startup_event():
     """Load initial documents on startup"""
-    docs_path = "../docs"
+    # 使用相对于当前文件的路径，确保路径正确
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    docs_path = os.path.join(os.path.dirname(current_dir), "docs")
+
     if os.path.exists(docs_path):
-        print("Loading initial documents...")
+        print(f"Loading initial documents from {docs_path}...")
         try:
-            courses, chunks = rag_system.add_course_folder(docs_path, clear_existing=False)
+            courses, chunks = rag_system.add_course_folder(docs_path, clear_existing=True)
             print(f"Loaded {courses} courses with {chunks} chunks")
         except Exception as e:
             print(f"Error loading documents: {e}")
+    else:
+        print(f"Warning: Docs folder not found at {docs_path}")
 
 # Custom static file handler with no-cache headers for development
 from fastapi.staticfiles import StaticFiles

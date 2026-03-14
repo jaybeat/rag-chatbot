@@ -38,7 +38,7 @@ Provide only the direct answer to what was asked.
         # Pre-build base API parameters
         self.base_params = {
             "model": self.model,
-            "temperature": 0,
+            "temperature": 1,
             "max_tokens": 800
         }
 
@@ -113,7 +113,8 @@ Provide only the direct answer to what was asked.
         messages = base_params["messages"].copy()
 
         # Add assistant's message with tool calls
-        messages.append({
+        # Handle reasoning_content for Kimi k2.5 thinking mode
+        assistant_msg = {
             "role": "assistant",
             "content": assistant_message.content or None,
             "tool_calls": [
@@ -127,7 +128,11 @@ Provide only the direct answer to what was asked.
                 }
                 for tool_call in assistant_message.tool_calls
             ]
-        })
+        }
+        # Add reasoning_content if present (Kimi k2.5 thinking mode)
+        if hasattr(assistant_message, 'reasoning_content') and assistant_message.reasoning_content:
+            assistant_msg["reasoning_content"] = assistant_message.reasoning_content
+        messages.append(assistant_msg)
 
         # Execute all tool calls and add results as tool messages
         for tool_call in assistant_message.tool_calls:
