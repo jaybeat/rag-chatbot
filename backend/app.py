@@ -95,7 +95,7 @@ async def startup_event():
     if os.path.exists(docs_path):
         print(f"Loading initial documents from {docs_path}...")
         try:
-            courses, chunks = rag_system.add_course_folder(docs_path, clear_existing=True)
+            courses, chunks = rag_system.add_course_folder(docs_path, clear_existing=False)
             print(f"Loaded {courses} courses with {chunks} chunks")
         except Exception as e:
             print(f"Error loading documents: {e}")
