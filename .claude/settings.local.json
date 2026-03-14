@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find . -maxdepth 2 -type f -name \"*.md\" -o -name \"*.json\" -o -name \"*.py\" -o -name \"*.toml\" -o -name \"*.yaml\" -o -name \"*.yml\" 2>/dev/null | head -50)",
+      "Bash(uv sync:*)"
+    ]
+  }
+}
